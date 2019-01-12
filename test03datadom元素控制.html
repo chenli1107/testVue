@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>vue.js测试--vueobj.$data、dom元素</title> 
+  <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+  <script src="./vue.js"></script>
+ </head> 
+ <body> 
+  <div id="app"> 
+   <br/>
+   <font color='red'>v-model:</font><input type="text" name="" value="" placeholder="在这里输入文字，下面会跟着变化" v-model="message" />
+   <br/>
+   <font color='red'>获取vue.data等属性值(见代码及log)</font>
+   <br/>
+   <font color='red'>获取dom元素(vueobj.$refs.xxxx)</font></font>
+   <br/>
+   <font color='red'>添加、删除vueobj的data中属性（$set、$delete）</font></font><button @click="bbb1">添加</button><button @click="bbb2">修改</button><button @click="bbb3">删除</button>
+   <hr /> 
+   <p> {{ message }}</p> 
+   <p> {{ name }}</p> 
+   <p> {{ arr }}</p>
+   <p ref="aaa"> {{ obj01.name }}</p>
+   <p ref="bbb"> {{ obj02[0].name }}------{{obj02.length}}</p>
+   <p> nextTick延迟回调 {{ aaa() }}</p>
+   
+   <p> {{ obj01.address }}</p>
+  </div> 
+  <script type="text/javascript">
+     var app = new Vue({ 
+                 el: '#app', 
+                 <!--数据-->
+                 data: { 
+                   message: 'Hello Vue!',
+                   name:'datanamexxxxx',
+                   arr: ['a1','a2','a3'],
+                   obj01: {'name': 'aa', 'age': 21},
+                   obj02: [{'name': 'aa1', 'age': 21},{'name': 'aa2', 'age': 22},{'name': 'aa3', 'age': 23}]
+                 },
+                 name: "这个name是我自己定义的属性",
+                 
+                 methods: {
+                    aaa(){
+                        this.$nextTick(function(){
+                            console.log(app.$refs.aaa.innerText)
+                            }
+                        )},
+                    bbb1(){this.$set(this.$data.obj01, "address", "北京")},
+                    bbb2(){this.$data.obj01.address = "上海"},
+                    bbb3(){this.$delete(this.$data.obj01, "address")}
+                        
+                 
+                 }
+                 
+               });
+     
+    <!--vue实例的属性通常obj.$xx获取；vue个人自定义的属性obj.$options.xxx获取-->
+    console.log(app.$el)
+    console.log(app.$data)
+    console.log(app.$data.name +"-----"+ app.name +"-----"+ app.$options.name)
+    
+    <!--选择dom元素，元素需加ref属性，使用时app.$refs.xxxxx-->
+    console.log(app.$refs.aaa.innerText  )
+    console.log(app.$refs.bbb.innerText  )
+    <!--手动挂载vue实例-->
+    <!--app.$mount("#app") 或new Vue().$mount("#app")--->
+    
+    <!--nextTick的使用：vue中的dom由vue生成及更新，要使用dom元素必须在dom生成更新完成之后（如aaa使用到dom必须nextTick延迟回调）-->
+      
+  </script>   
+ </body>
+</html>

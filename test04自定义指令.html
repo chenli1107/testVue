@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>vue.js测试--自定义指令</title> 
+  <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+  <script src="./vue.js"></script>
+  
+    <script type="text/javascript">
+         var app = null;
+         window.onload = function(){
+               app = new Vue({ 
+                 el: '#app', 
+                 <!--数据-->
+                 data: { 
+                   message: 'Hello Vue!'
+                 },
+                 directives: {
+                   //元素被插入DOM时，焦点移至该元素
+                   myfocus: {
+                     inserted(el){ el.focus(); }
+                   }
+                 }
+                 
+               });
+          }
+               
+  
+    //自定义指令可操作DOM。指令必须加前缀v-
+    Vue.directive("hello", {
+      //binding含有属性：
+      //binding.value
+      //binding.arg 
+      //binding.expression(表达式v-my-directive="1+1") 
+      //binding.modifiers(如v-on:click.prevent)
+      bind(el, binding){
+        console.log(el, binding.arg);
+        el.style.color = "red";
+        alert("生命周期。指令第一次绑定到元素上时调用，只调用一次，可执行初始化操作");
+      },
+      inserted(){
+        alert("生命周期。被绑定元素插入到dom中时调用")
+      },
+      update(){
+        alert("生命周期。被绑定元素所在模板更新时调用")
+      },
+      componentUpdated(){
+        alert("生命周期。被绑定元素所在模板完成一次更新周期时调用")
+      },
+      unbind(){
+        alert("生命周期。被绑定元素解绑时调用，只调用一次")
+      }
+    })
+
+  </script>  
+ </head> 
+ <body> 
+  <div id="app"> 
+   <br/>
+   <font color='red'>v-model:</font><input type="text" name="" value="" placeholder="在这里输入文字，下面会跟着变化" v-model="message" />
+   
+   <hr /> 
+     <p v-hello>{{message}}</p>
+     <p v-hello:mmmparam>{{message}}</p>
+     <p v-hello>{{message}}</p>
+     <p v-hello>{{message}}</p>
+     <input type=text v-myfocus>
+  </div> 
+ 
+ </body>
+</html>

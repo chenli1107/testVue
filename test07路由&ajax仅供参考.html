@@ -1,0 +1,108 @@
+路由（仅供参考）：
+<template>
+  <div class="hello">
+  link:
+  <router-link to="/tofirstrouter">my test router</router-link>
+  <Myrouter></Myrouter>
+
+<template>
+    <div id="app">
+        <router-view></router-view>
+ 
+        <!-- 这里带参数调用函数 不同参数就匹配不同的路由 -->
+        <router-link to="/a">a</router-link>
+        <router-link to="/b">b</router-link>
+        <router-link to="/c">c</router-link>
+    </div>
+</template>
+
+
+<!--
+//局部定义路由
+<script>
+    var Foo = { template: '<div>foo</div>' }
+    var Home= { template：'<div>Home</div>' }
+    var Bar = { template: '<div>bar</div>' }
+
+    // 2. 定义路由
+    // 每个路由应该映射一个组件。 其中"component" 可以是
+    // 通过 Vue.extend() 创建的组件构造器，
+    // 或者，只是一个组件配置对象。
+    // 我们晚点再讨论嵌套路由。
+    var routes = [
+        { path: '/', component: Home},
+        { path: '/foo', component: Foo },
+        { path: '/bar', component: Bar }
+    ]
+
+    // 3. 创建 router 实例，然后传 `routes` 配置
+    // 你还可以传别的配置参数, 不过先这么简单着吧。
+    var router = new VueRouter({
+        routes // （缩写）相当于 routes: routes
+    })
+
+    // 4. 创建和挂载根实例。
+    // 记得要通过 router 配置参数注入路由，
+    // 从而让整个应用都有路由功能
+    var app = new Vue({
+        router,
+        el:'#app'
+    })
+</script>
+-->
+
+====================================================================================================
+
+ methods:{
+                    send(){
+                        axios({
+                            method:'get',
+                            url:'http://www.baidu.com?name=tom&age=23'
+                        }).then(function(resp){
+                            console.log(resp.data);
+                        }).catch(resp => {
+                            console.log('请求失败：'+resp.status+','+resp.statusText);
+                        });
+                    },
+                    sendGet(){
+                        axios.get('server.php',{
+                            params:{
+                                name:'alice',
+                                age:19
+                            }
+                        })
+                        .then(resp => {
+                            console.log(resp.data);
+                        }).catch(err => {             //
+                            console.log('请求失败：'+err.status+','+err.statusText);
+                        });
+                    },
+                    sendpostjson () {
+			                this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+			                    {params:{wd:'a'},
+			                        jsonp:'cb', //百度使用的jsonp参数名为cb，所以需要修改,默认使用的是callbakc参数就不用修改
+			                    }).then(function (resp) {
+			                    console.log(resp.data)
+			                }).catch(function (err) {
+			                    console.log(err)
+			                })
+			            }
+			   }
+
+
+form表单：
+//  首先进行url编码
+var data =  Qs.stringify({
+    firstName: 'yiifaa',
+    lastName: '@163.com'
+});
+//  提交数据
+axios({
+      method: 'post',
+      url: '/user/12345',
+      //    必不可少，修改数据的提交方式
+      headers : {
+          "Content-Type":'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      data
+});

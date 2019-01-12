@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>vue.js测试</title> 
+  <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+  <script src="./vue.js"></script>
+ </head> 
+ <body> 
+  <div id="app"> 
+   <br/>
+   <font color='red'>v-model:</font><input type="text" name="" value="" placeholder="在这里输入文字，下面会跟着变化" v-model="message" />
+   
+   <hr /> 
+   <p> {{ message }}</p> 
+   <p> {{ name }}</p> 
+   <p> {{ arr }}</p>
+   <p> {{ obj01.name }}</p>
+   <p> {{ obj02[0].name }}------{{obj02.length}}</p>
+  </div> 
+  <script type="text/javascript">
+     var app = new Vue({ 
+                 el: '#app', 
+                 <!--数据-->
+                 data: { 
+                   message: 'Hello Vue!',
+                   name:'aaasdfasdf',
+                   arr: ['a1','a2','a3'],
+                   obj01: {'name': 'aa', 'age': 21},
+                   obj02: [{'name': 'aa1', 'age': 21},{'name': 'aa2', 'age': 22},{'name': 'aa3', 'age': 23}]
+                 }
+                 
+               });
+
+  </script>   
+ </body>
+</html>

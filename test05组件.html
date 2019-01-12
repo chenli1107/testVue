@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>vue.js测试-组件</title> 
+  <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+  <script src="./vue.js"></script>
+  <script type="text/javascript">
+    var myComponent = Vue.extend({
+      template: "<h3>组件创建方式1</h3>"
+    });
+    Vue.component("hhh", myComponent);
+    Vue.component("www", {
+      template: "<h3>组件创建方式2</h3>"
+    });
+
+
+         var app = null;
+         window.onload = function(){
+               app = new Vue({ 
+                 el: '#app', 
+                 <!--数据-->
+                 data: { 
+                   message: 'Hello Vue!',
+                   flag: '',
+                   flag2: '',
+                   flag3: ''
+                 },
+                 //局部组件
+                 components: {
+                   "my-address": {
+                     template: "<h3>这是局部组件</h3>"
+                   },
+                   "my-address2": {
+                     template: "<h3>{{ address }}</h3>",
+                     data(){
+                       return {address: "这是局部组件2"}
+                     }
+                   },
+                   "my-address3": {
+                     template: "#mmmmmtemplate",
+                     data(){
+                       return {
+                         name:'aaasdfasdf',
+                         arr: ['a1','a2','a3']
+                       }
+                     }
+                   },
+                   "my-address4": {
+                     template: "#my-address4-template"
+                   },
+                   "my-address51": {
+                     template: "<h5>组件缓存51: value: {{ x }}</h5>",
+                     data(){
+                       return {x: Math.random()}
+                     }
+                   },
+                   "my-address52": {
+                     template: "<h5>组件缓存52: value: {{ x }}</h5>",
+                     data(){
+                       return {x: Math.random()}
+                     }
+                   },
+                 }
+               });
+          }
+  </script> 
+  
+ </head> 
+ <template id="mmmmmtemplate">
+   <div>
+   <h3>这是局部组件3</h3>
+   <p> {{ name }}</p> 
+   <p> {{ arr }}</p>
+   </div>
+ </template>
+ <template id="my-address4-template">
+   <div>
+	   <h3>组件嵌套内容4</h3>
+	   <slot name="mmmm4"></slot>
+   </div>
+ </template>
+ 
+ <body> 
+  <div id="app"> 
+   <br/>
+   <font color='red'>v-model:</font><input type="text" name="" value="" placeholder="在这里输入文字，下面会跟着变化" v-model="message" />
+   <br/>
+   
+   <hr /> 
+   <h2>{{ message }}</h2>
+   <hhh></hhh>
+   <www></www>
+   <my-address></my-address>
+   <my-address2></my-address2>
+   <my-address3></my-address3>
+   <my-address4>
+     <ul slot="mmmm4">
+       <li>这是嵌套的内容a</li>
+       <li>这是嵌套的内容b</li>
+     </ul>
+   </my-address4>
+   
+   <button @click="flag='my-address3'">动态切换组件3</button>
+   <button @click="flag='my-address4'">动态切换组件4</button>
+   <component :is="flag"></component>
+   <br>
+   
+   <button @click="flag2='my-address333'">动态切换组件3</button>
+   <button @click="flag2='my-address444'">动态切换组件4</button>
+   <my-address3 v-if="flag2=='my-address333'"></my-address3>
+   <my-address4 v-if="flag2=='my-address444'">
+     <ul slot="mmmm4">
+       <li>这是嵌套的内容a</li>
+       <li>这是嵌套的内容b</li>
+     </ul>
+   </my-address4>
+   <br>
+   
+   <h3>组件缓存测试：</h3>
+   <button @click="flag3='my-address51'">组件缓存测试51</button>
+   <button @click="flag3='my-address52'">组件缓存测试52</button>
+   <h5>未缓存部分：</h5>
+   <component :is="flag3"></component>
+   <h5>缓存部分：</h5>
+   <keep-alive>
+     <component :is="flag3"></component>
+   </keep-alive>
+
+  </div> 
+  
+ </body>
+</html>

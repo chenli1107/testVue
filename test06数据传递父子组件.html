@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>vue.js测试</title> 
+  <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+  <script src="./vue.js"></script>
+  <script type="text/javascript">
+     var app = null;
+         window.onload = function(){
+               app = new Vue({ 
+                 el: '#app', 
+                 <!--数据-->
+                 data: { 
+                   
+                 },
+                 //局部组件
+                 components: {
+                   //父
+                   "pcom":{
+                     "template": "#p",
+                     data () {
+                       return {name: ""}
+                     },
+                     //子
+                     components: {
+                       "ccom": {
+                         "template": "#c",
+                         // 接受父组件的值
+											    props: {
+											      inputnamexxx: String,
+											      required: true
+											    }
+                       }
+                     }
+                   }
+                 
+                 }
+               });
+             }
+
+ </script>
+ <template id="p">
+  <div>
+    父组件:
+    <input type="text" v-model="name">
+    <br>
+    <br>
+    <!-- 引入子组件 -->
+    <ccom :inputnamexxx="name"></ccom>
+  </div>
+</template>
+<template id="c">
+  <div>
+    子组件:
+    <span>{{inputnamexxx}}</span>
+  </div>
+</template>
+
+ </head> 
+ <body> 
+  <div id="app"> 
+   <pcom></pcom>
+  </div> 
+   
+ </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+ <html>
+ <head>
+ <meta charset="UTF-8">
+ <title>
+vue.js测试 - 代码之美专栏</title>
+ <!-- author:昌维 代码之美 https://zhuanlan.zhihu.com/codes -->
+ <script src="https://unpkg.com/vue/dist/vue.js">
+</script>
+ </head>
+ 
+ <body>
+ <div id="app">
+ <input type="text" name="" value="" placeholder="在这里输入文字，下面会跟着变化" v-model="message">
+ <hr>
+ <p>
+{{ message }}</p>
+<br/>说了这么多，我还是不知道怎么用它做出一个像知乎那样的页面啊，到底怎么学它呢？
+<br/>
+<br/>前面我们看了一个响应式的数据绑定案例，那只是一个DEMO，而且也看不出有什么实际意义，离真正的单页应用程序还差得远，到底怎么用它开发真实的项目呢？
+<br/>
+<br/>我的建议是，先把介绍 - vue.js官方文档的基础部分硬着头皮看一遍。除了组件这个小节涉及到了很多晦涩难懂的名词以外，前面几章完全就是把Vue.js当作一个模版引擎来用。
+<br/>
+<br/>然后开始学习ECMAScript6，Webpack，NPM以及Vue-Cli的基本用法，最好对Node.js也要有所了解。
+<br/>
+<br/>最后组件部分先大致看一遍，了解组件里面都有哪些概念之后，开始看网上各种实战视频以及文章还有别人开源的源代码。
+<br/>
+
+<a href=https://blog.csdn.net/liang377122210/article/details/71545459>什么是VUE?为什么用VUE?</a>
+
+
+<br/>vue要用什么软件编程?sublime text，atom，vs code 都可以，找一个喜欢的就好。最基本的就是安装nodejs
+<br/>vue-devtools 调试工具
+<br/>Webpack是一个前端打包工具
+<br/>Webpack还有构建的功能，
+<br/>Webpack不止这点功能，它还可以通过安装各种插件来扩展，比如说热加载技术，就是解放键盘的F5键。让我们修改代码，并且按Ctrl+S保存之后，浏览器页面自动刷新变化，不需要我们去手动刷新
+<br/>
+<br/>14.Vue-CLi又是啥？
+<br/>它是一个vue.js的脚手架工具。说白了就是一个自动帮你生成好项目目录，配置好Webpack，以及各种依赖包的工具，它可以通过
+<br/>npm install vue-cli -g
+<br/>的方式安装，后面的-g表示全局安装的意思，意味着你可以打开命令行之后直接通过vue命令调用它。
+<br/>
+<br/>
+<br/>17.我在很多地方还看到Vuex和Vue-route，它们又是什么？
+<br/>Vuex是vue的一个状态管理器。用于集中管理一个单页应用程序中的各种状态。
+<br/>Vue-route是vue的一个前端路由器，这个路由器不是我们上网用的路由器，而是一个管理请求入口和页面映射关系的东西。它可以实现对页面局部进行无刷新的替换，让用户感觉就像切换到了网页一样。
+<br/>要讲清楚这两个东西，又得花费大量篇幅，所以这里只是简单提一下，先学好vue.js本身才是最重要的。
+<br/>
+<br/>18.我还在一些地方看到过Vue-resource和Axios，它们又是什么？
+<br/>我们在传统的前后端不分离的开发中，后端直接把数据通过模版引擎拼接进了返回的HTML中。而现在做单页应用程序属于前后端分离开发，那么这个单页应用程序中的数据就得通过ajax的方式获取，也要通过ajax的方式提交到后端。
+<br/>在传统开发中我们都是通过xmlhttprequest手动操作，或者通过JQuery的ajax方法来进行数据提交获取。
+<br/>vue.js本身没有封装ajax操作库，所以我们要通过Vue-resource和Axios来进行ajax操作，而因为种种原因，现在vue.js2.0已经将axios作为官方推荐的ajax库了。
+<br/>
+<br/>Vue.js，没想到顺带把ECMAScript6，Webpack配置，ESLint配置，bable配置，npm使用，node.js语法，以后vue全家桶中的vuex，vue-route
+ </div>
+ 
+ <script type="text/javascript">
+ var app = new Vue({ el: '#app', data: { message: 'Hello Vue!' } }) </script>
+ </body>
+ 
+ 
+ </html>
+

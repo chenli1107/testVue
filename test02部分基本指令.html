@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="UTF-8" /> 
+  <title>vue.js测试</title> 
+  <!--<script src="https://unpkg.com/vue/dist/vue.js"></script>-->
+  <script src="./vue.js"></script>
+ </head> 
+ <body> 
+  <div id="app"> 
+   <font color='red'>v-model:</font><input type="text" name="" value="" placeholder="在这里输入文字，下面会跟着变化" v-model="message" />
+   <br/>
+   <font color='red'>v-for:（循环）</font>
+     <br/>
+     <a v-for="item in arr">{{ item }};;;;</a>
+     <br/>
+     <a v-for="(v, i) in arr">{{ v }}--{{ i }};;;;</a> <!--数组（值,索引）-->
+     <br/>
+     <a v-for="(v, i) in obj02">{{ v }}--{{ v.name }}--{{ v.age }}--{{ i }};;;;</a> <!--数组对象（值,索引）-->
+   <br/>
+   <font color='red'>v-on:（事件）click|mouseover|mouseout（v-on:click简写@click）</font><button v-on:click="myclick">点我</button>
+                                                         <button v-on:mouseover="mymouseover" v-on:mouseout="mymouseout">鼠标移到我这</button>
+   <br/>
+   <font color='red'>v-show:（是否显示判断）</font><span v-show="myshowflag">看得见，我后面还有看不见的部分---》</span><span v-show="!myshowflag">看不见</span>
+   <br/>
+   <font color='red'>v-if:v-else:（ifelse）</font><span v-for="vv in obj02" v-if="vv.age>21">{{vv.age}}</span>
+   <br/>
+   <font color='red'>v-html:v-text:（内容填充）</font><div v-text="myvtext"></div><div v-html="myvhtml"></div><!--div里无内容是貌似不支持"/>"简写结束-->
+   <br/>
+   <font color='red'>事件ccc防止事件冒泡(多层元素都绑定事件时,一次会触发多层事件)</font><div @click="ccc1">1<div @click=ccc2>点我冒泡<button @click="ccc3($event)">点我不冒泡</button><button @click.stop="ccc4()">点我也也也不冒泡</button></div></div>
+   <br/>
+   <font color='red'>事件ddd取消事件默认动作（如:点击a href=页面跳转）</font><a href="http://www.baidu.com" @click="ddd1">点我会页面跳转</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.baidu.com"  @click.prevent="ddd1">点我页面不跳转，只调用事件函数</a>
+   <br/>
+   <font color='red'>事件eee元素的事件只触发一次</font><button @click.once="eee1()">点我只触发一次</button><button @click.once="eee1()">点我只触发一次</button>
+   <br/>
+   <font color='red'>事件fff键盘事件(任意键@keydown或指定键@keydown.a|enter====</font>任意键触发:<input type=text @keydown="fff1"/>a键触发<input type=text @keydown.a="fff2"/>enter键触发<input type=text @keydown.enter="fff2"/>
+   <br/>
+   <font color='red'>filter（过滤器，使用场景如数据的格式化显示。按使用范围分为全局、实例内部过滤器）</font>保留两位小数：{{1.23456|numberF1}}保留两位小数：{{1.23456|numberF2(2)}}保留两位小数：{{1.23456|numberF3(2)}}<br/>
+                          使用过滤器将0123转为文字（在线、离线、隐身、繁忙）：{{0|statusToView}}|{{1|statusToView}}|{{2|statusToView}}|{{3|statusToView}}
+   <br/>
+   <font color='red'>watch（监听。按使用范围分为全局、实例内部监听。监听的为对象-略）</font>见watch下的函数即可。
+   
+   <hr /> 
+   <p> {{ message }}</p> 
+   <p> {{ name }}</p> 
+   <p> {{ arr }}</p>
+   <p> {{ obj01.name }}</p>
+   <p> {{ obj02[0].name }}------{{obj02.length}}</p>
+  </div> 
+  <script type="text/javascript">
+     <!--过滤器-->
+     Vue.filter("numberF3", function(data, n){return data.toFixed(n)});
+     Vue.filter("statusToView", function(data){
+                switch(data){
+                  case 0: return "在线";break;
+                  case 1: return "离线";break;
+                  case 2: return "隐身";break;
+                  case 3: return "繁忙";break;
+                  default: return "离线";
+                }});  
+     var app = new Vue({ 
+                 el: '#app', 
+                 <!--数据-->
+                 data: { 
+                   message: 'Hello Vue!',
+                   name:'aaasdfasdf',
+                   arr: ['a1','a2','a3'],
+                   obj01: {'name': 'aa', 'age': 21},
+                   obj02: [{'name': 'aa1', 'age': 21},{'name': 'aa2', 'age': 22},{'name': 'aa3', 'age': 23}],
+                   myshowflag: true,
+                   myvtext: "这是填充的text",
+                   myvhtml: "<span>这是填充的span标签里的内容</span>"
+                 },
+                 <!--函数方法-->
+                 methods: {
+                   myclick: function(){ this.message='ccccccccccccccc'},
+                   mymouseover: function(){ this.message='mymouseovermymouseovermymouseover'},
+                   mymouseout: function(){ this.message='mymouseoutmymouseoutmymouseout'},
+                   ccc1(){alert(1)},
+                   ccc2(){alert(2)},
+                   ccc3(evt){alert(3); evt.stopPropagation()},
+                   ccc4(){alert(4)},
+                   ddd1(){console.log("ddd1");alert(11)},<!--evt.preventDefault()-->
+                   eee1(){alert("eee")},
+                   fff1(){alert("我是被任意键触发的")},
+                   fff2(){alert("我是被指定的键触发的")}
+                 },
+                 <!--过滤器-->
+                 filters: {
+                   numberF1(data){return data.toFixed(2)},
+                   numberF2(data, n){return data.toFixed(n)}
+                 },
+                 watch: {
+                   message: function(newvalue, oldvalue){
+                     console.log("实例内部监听到message有变更，变更前["+oldvalue+"]变更后["+newvalue+"]");
+                   }
+                 }
+               });
+               
+        app.$watch("message", function(newvalue, oldvalue){
+                     console.log("实例外部监听到message有变更，变更前["+oldvalue+"]变更后["+newvalue+"]");
+                   });
+  </script>   
+ </body>
+</html>

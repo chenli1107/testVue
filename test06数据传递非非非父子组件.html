@@ -1,0 +1,70 @@
+非父子组件之间传值，需要定义个公共的公共实例文件bus.js，作为中间仓库来传值，不然路由组件之间达不到传值的效果。
+
+公共bus.js
+
+//bus.js
+import Vue from 'vue'
+export default new Vue()
+
+
+
+组件A：
+
+<template>
+  <div>
+    A组件:
+    <span>{{elementValue}}</span>
+    <input type="button" value="点击触发" @click="elementByValue">
+  </div>
+</template>
+<script>
+  // 引入公共的bug，来做为中间传达的工具
+  import Bus from './bus.js'
+  export default {
+    data () {
+      return {
+        elementValue: 4
+      }
+    },
+    methods: {
+      elementByValue: function () {
+        Bus.$emit('val', this.elementValue)
+      }
+    }
+  }
+</script>
+
+
+
+组件B：
+
+<template>
+  <div>
+    B组件:
+    <input type="button" value="点击触发" @click="getData">
+    <span>{{name}}</span>
+  </div>
+</template>
+<script>
+  import Bus from './bus.js'
+  export default {
+    data () {
+      return {
+        name: 0
+      }
+    },
+    mounted: function () {
+      var vm = this
+      // 用$on事件来接收参数
+      Bus.$on('val', (data) => {
+        console.log(data)
+        vm.name = data
+      })
+    },
+    methods: {
+      getData: function () {
+        this.name++
+      }
+    }
+  }
+</script>

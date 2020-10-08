@@ -28,6 +28,6 @@
 
 <style>
   #my-cmp0{
-    backaround-color: #ccc;
+    background-color: #ccc;
   }
 </style>

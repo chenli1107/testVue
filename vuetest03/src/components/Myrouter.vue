@@ -3,7 +3,7 @@
     <div id="app">
         <router-view></router-view>
  
-        <!-- ÕâÀï´ø²ÎÊýµ÷ÓÃº¯Êý ²»Í¬²ÎÊý¾ÍÆ¥Åä²»Í¬µÄÂ·ÓÉ -->
+        <!-- è¿™é‡Œå¸¦å‚æ•°è°ƒç”¨å‡½æ•° ä¸åŒå‚æ•°å°±åŒ¹é…ä¸åŒçš„è·¯ç”± -->
         <router-link to="/a">a</router-link>
         <router-link to="/b">b</router-link>
         <router-link to="/c">c</router-link>

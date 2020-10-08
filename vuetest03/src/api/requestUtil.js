@@ -1,21 +1,21 @@
 import axios from 'axios'
  
 const instance = axios.create({
-  baseURL: 'http://localhost:8888', // apiµÄbase_url
-  timeout: 10000 // ÇëÇó³¬Ê±Ê±¼ä
+  baseURL: 'http://localhost:8888', // apiçš„base_url
+  timeout: 10000 // è¯·æ±‚è¶…æ—¶æ—¶é—´
   // transformRequest: data => qs.stringify(data) //
 })
-// requestÀ¹½ØÆ÷
+// requestæ‹¦æˆªå™¨
 instance.interceptors.request.use(
   e => {
     e.params = e.params || {}
     e.headers = e.headers || {}
-    //set Ä¬ÈÏÖµ
+    //set é»˜è®¤å€¼
     return e
   },
   error => ({ status: 0, msg: error.message })
 )
-// responeÀ¹½ØÆ÷
+// responeæ‹¦æˆªå™¨
 instance.interceptors.response.use(
   response => {
     const resp = response.data

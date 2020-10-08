@@ -1,6 +1,6 @@
 <template>
 	<div class="user">
-		<h1> 用户列表 </h1>
+		<h1> 鐢ㄦ埛鍒楄〃 </h1>
 		<ul>
 		  <li v-for="u in users">{{u}}</li>
 		</ul>

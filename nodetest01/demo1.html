@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-family: '微软雅黑';
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border-collapse: collapse;
+            text-align: center;
+            padding: 5px;
+            border: solid 1px #ccc;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+            <tr>
+                <td><input type="text" placeholder="请输入要查询的ID" v-model='selUID'></td>
+                <td><button @click='selUser()'>查询</button></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><input type="text" placeholder="qq" v-model='a_qq'></td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="name" v-model='a_name'></td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="tel" v-model='a_tel'></td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="age" v-model='a_age'></td>
+            </tr>
+            <tr>
+                <td><button @click='addUser()'>添加</button></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>qq</th>
+                <th>tel</th>
+                <th>age</th>
+            </tr>
+            <tr v-for="user in users">
+                <td>{{user.UID}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.qq}}</td>
+                <td>{{user.tel}}</td>
+                <td>{{user.age}}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                users: [],
+                selUID: '',
+                a_age: '',
+                a_name: '',
+                a_qq: '',
+                a_tel: ''
+            },
+            methods: {
+                selUser() {
+                    axios.get('http://127.0.0.1:3000/selUser', {
+                        params: {
+                            UID: this.selUID
+                        }
+                    }).then(res => {
+                        this.users = res.data
+                    })
+                },
+                addUser() {
+                    axios.post('http://127.0.0.1:3000/addUser', `qq=${this.a_qq}&name=${this.a_name}&age=${this.a_age}&tel=${this.a_tel}`).then(res => {
+                        this.getUsers();
+                    })
+                },
+                getUsers() {
+                    axios.get('http://127.0.0.1:3000/getUsers').then(res => {
+                        this.users = res.data// 获取后端的数据一定要加上data
+                    })
+                }
+            },
+
+            mounted() {
+                this.getUsers();
+            }
+        })
+    </script>
+</body>
+
+</html>
